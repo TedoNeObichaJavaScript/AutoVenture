@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content container text-center">
+        <h1>Drive in Style</h1>
+        <p>Find your perfect ride with CarRent Pro</p>
+        <a href="@Url.Action("Index", "Cars")" class="btn btn-custom btn-lg">Browse Cars</a>
+    </div>
+</section>
+
+<!-- Available Cars Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center">Available Cars</h2>
+        <div class="row">
+            <!-- Here you can use a Razor loop to iterate over cars from your model -->
+            @foreach (var car in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="@Url.Content(car.ImageUrl ?? "~/images/default-car.jpg")" class="card-img-top" alt="@car.Make">
+                        <div class="card-body">
+                            <h5 class="card-title">@car.Make @car.Model</h5>
+                            <p class="card-text">Year: @car.Year</p>
+                            <p class="card-text">Price per day: $@car.DailyRentPrice</p>
+                            <a href="@Url.Action("Details", "Cars", new { id = car.CarId })" class="btn btn-custom">Rent Now</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
