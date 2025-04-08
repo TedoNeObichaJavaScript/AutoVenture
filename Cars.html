@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EasyRide - Cars</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <a href="car-rental-website.html" class="text-2xl font-bold text-blue-600">EasyRide</a>
+    <nav class="space-x-4">
+        <a href="car-rental-website.html" class="text-blue-500">Home</a>
+        <a href="Cars.html" class="text-blue-500">Cars</a>
+        <a href="Contact.html" class="text-blue-500">Contact</a>
+    </nav>
+</header>
+
+<section class="max-w-6xl mx-auto p-6">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Car Catalog</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Mazda MX-5 -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="carsphoto/mx5.png" class="rounded-md mb-3 w-full h-40 object-cover" />
+            <h3 class="text-lg font-bold text-blue-600">Mazda MX-5</h3>
+            <p class="text-sm text-gray-600 mb-2">Sporty convertible with 2.0L engine, 181hp, 28 MPG city / 35 MPG highway.</p>
+            <p class="text-sm font-semibold mb-2">Price: $60/day</p>
+            <button onclick="openModal('Mazda MX-5', '2.0L, 181hp', '28 MPG city / 35 MPG highway', 60, 'carsphoto/mx5.png')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Toyota Corolla -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="carsphoto/corolla.png" class="rounded-md mb-3 w-full h-40 object-cover" />
+            <h3 class="text-lg font-bold text-blue-600">Toyota Corolla</h3>
+            <p class="text-sm text-gray-600 mb-2">1.8L engine, 139hp, 30 MPG city / 38 MPG highway. Great for daily use.</p>
+            <p class="text-sm font-semibold mb-2">Price: $30/day</p>
+            <button onclick="openModal('Toyota Corolla', '1.8L, 139hp', '30 MPG city / 38 MPG highway', 30, 'carsphoto/corolla.png')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- BMW 3 Series -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="carsphoto/bmw.png" class="rounded-md mb-3 w-full h-40 object-cover" />
+            <h3 class="text-lg font-bold text-blue-600">BMW 3 Series</h3>
+            <p class="text-sm text-gray-600 mb-2">Luxury sedan with 2.0L turbo, 255hp. Smooth and fast.</p>
+            <p class="text-sm font-semibold mb-2">Price: $70/day</p>
+            <button onclick="openModal('BMW 3 Series', '2.0L Turbo, 255hp', '25 MPG city / 34 MPG highway', 70, 'carsphoto/bmw.png')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Audi A4 -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="carsphoto/audi.png" class="rounded-md mb-3 w-full h-40 object-cover" />
+            <h3 class="text-lg font-bold text-blue-600">Audi A4</h3>
+            <p class="text-sm text-gray-600 mb-2">Premium ride with refined interior, 2.0L engine, 201hp.</p>
+            <p class="text-sm font-semibold mb-2">Price: $65/day</p>
+            <button onclick="openModal('Audi A4', '2.0L Turbo, 201hp', '24 MPG city / 31 MPG highway', 65, 'carsphoto/audi.png')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Ford Focus -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="carsphoto/focus.png" class="rounded-md mb-3 w-full h-40 object-cover" />
+            <h3 class="text-lg font-bold text-blue-600">Ford Focus</h3>
+            <p class="text-sm text-gray-600 mb-2">Compact and fuel-efficient. Great for city driving.</p>
+            <p class="text-sm font-semibold mb-2">Price: $28/day</p>
+            <button onclick="openModal('Ford Focus', '2.0L, 160hp', '26 MPG city / 36 MPG highway', 28, 'carsphoto/focus.png')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Jeep Wrangler -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="carsphoto/jeep.png" class="rounded-md mb-3 w-full h-40 object-cover" />
+            <h3 class="text-lg font-bold text-blue-600">Jeep Wrangler</h3>
+            <p class="text-sm text-gray-600 mb-2">Off-road beast with 3.6L V6, 285hp. Adventure ready.</p>
+            <p class="text-sm font-semibold mb-2">Price: $75/day</p>
+            <button onclick="openModal('Jeep Wrangler', '3.6L V6, 285hp', '17 MPG city / 25 MPG highway', 75, 'carsphoto/jeep.png')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-lg relative">
+        <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 text-xl">&times;</button>
+
+        <img id="modal-img" src="" class="rounded mb-4 w-full h-48 object-cover" />
+        <h2 id="modal-title" class="text-xl font-bold text-blue-600 mb-1"></h2>
+        <p id="modal-engine" class="text-sm text-gray-600 mb-1"></p>
+        <p id="modal-mileage" class="text-sm text-gray-600 mb-1"></p>
+        <p class="text-sm font-semibold mb-4">Price: $<span id="modal-price"></span>/day</p>
+
+        <form id="rent-form" class="space-y-4">
+            <div>
+                <label class="block font-medium">Full Name</label>
+                <input type="text" name="fullname" required class="w-full border p-2 rounded" />
+            </div>
+            <div>
+                <label class="block font-medium">EGN</label>
+                <input type="text" name="egn" required pattern="\d{10}" class="w-full border p-2 rounded" />
+            </div>
+            <div>
+                <label class="block font-medium">Address</label>
+                <input type="text" name="address" required placeholder="City, Street, No..." class="w-full border p-2 rounded" />
+            </div>
+            <div>
+                <label class="block font-medium">Card Number</label>
+                <input type="text" name="card" required pattern="\d{16}" placeholder="1234567812345678" class="w-full border p-2 rounded" />
+            </div>
+            <div class="flex gap-4">
+                <div class="flex-1">
+                    <label class="block font-medium">Expiry</label>
+                    <input type="text" name="expiry" required placeholder="MM/YY" class="w-full border p-2 rounded" />
+                </div>
+                <div class="flex-1">
+                    <label class="block font-medium">CVV</label>
+                    <input type="text" name="cvv" required pattern="\d{3}" placeholder="123" class="w-full border p-2 rounded" />
+                </div>
+            </div>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">Confirm Rental</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById("modal");
+    const rentForm = document.getElementById("rent-form");
+    const modalTitle = document.getElementById("modal-title");
+    const modalEngine = document.getElementById("modal-engine");
+    const modalMileage = document.getElementById("modal-mileage");
+    const modalPrice = document.getElementById("modal-price");
+    const modalImg = document.getElementById("modal-img");
+
+    function openModal(name, engine, mileage, price, img) {
+        modalTitle.textContent = name;
+        modalEngine.textContent = "Engine: " + engine;
+        modalMileage.textContent = "Mileage: " + mileage;
+        modalPrice.textContent = price;
+        modalImg.src = img;
+        modal.classList.remove("hidden");
+    }
+
+    function closeModal() {
+        modal.classList.add("hidden");
+        rentForm.reset();
+    }
+
+    rentForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Your rental has been confirmed!");
+        closeModal();
+    });
+</script>
+</body>
+</html>
