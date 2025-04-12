@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Cars";
+}
+
+<section class="max-w-6xl mx-auto p-6">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Car Catalog</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Mazda MX-5 -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/mx5.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Mazda MX-5" />
+            <h3 class="text-lg font-bold text-blue-600">Mazda MX-5</h3>
+            <p class="text-sm text-gray-600 mb-2">Sporty convertible with 2.0L engine, 181hp, 28 MPG city / 35 MPG highway.</p>
+            <p class="text-sm font-semibold mb-2">Price: $60/day</p>
+            <button onclick="openModal('Mazda MX-5', 1)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Toyota Corolla -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/corolla.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Toyota Corolla" />
+            <h3 class="text-lg font-bold text-blue-600">Toyota Corolla</h3>
+            <p class="text-sm text-gray-600 mb-2">1.8L engine, 139hp, 30 MPG city / 38 MPG highway. Great for daily use.</p>
+            <p class="text-sm font-semibold mb-2">Price: $30/day</p>
+            <button onclick="openModal('Toyota Corolla', 2)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- BMW 3 Series -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/bmw.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="BMW 3 Series" />
+            <h3 class="text-lg font-bold text-blue-600">BMW 3 Series</h3>
+            <p class="text-sm text-gray-600 mb-2">Luxury sedan with 2.0L turbo, 255hp. Smooth and fast.</p>
+            <p class="text-sm font-semibold mb-2">Price: $70/day</p>
+            <button onclick="openModal('BMW 3 Series', 3)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Audi A4 -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/audi.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Audi A4" />
+            <h3 class="text-lg font-bold text-blue-600">Audi A4</h3>
+            <p class="text-sm text-gray-600 mb-2">Premium ride with refined interior, 2.0L engine, 201hp.</p>
+            <p class="text-sm font-semibold mb-2">Price: $65/day</p>
+            <button onclick="openModal('Audi A4', 4)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Ford Focus -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/focus.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Ford Focus" />
+            <h3 class="text-lg font-bold text-blue-600">Ford Focus</h3>
+            <p class="text-sm text-gray-600 mb-2">Compact and fuel-efficient. Great for city driving.</p>
+            <p class="text-sm font-semibold mb-2">Price: $28/day</p>
+            <button onclick="openModal('Ford Focus', 5)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Jeep Wrangler -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/jeep.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Jeep Wrangler" />
+            <h3 class="text-lg font-bold text-blue-600">Jeep Wrangler</h3>
+            <p class="text-sm text-gray-600 mb-2">Off-road beast with 3.6L V6, 285hp. Adventure ready.</p>
+            <p class="text-sm font-semibold mb-2">Price: $75/day</p>
+            <button onclick="openModal('Jeep Wrangler', 6)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- Modal Rent Form -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 id="modal-title" class="text-xl font-bold mb-4 text-blue-700">Rent Car</h2>
+        <form id="rent-form">
+            <input type="hidden" name="CarId" id="car-id" />
+
+            <div class="mb-3">
+                <label for="customer-name" class="block font-semibold">Your Name</label>
+                <input type="text" name="CustomerName" id="customer-name" class="w-full border rounded px-3 py-2 mt-1" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="rental-date" class="block font-semibold">Rental Date</label>
+                <input type="date" name="RentalDate" id="rental-date" class="w-full border rounded px-3 py-2 mt-1" required />
+            </div>
+
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Confirm</button>
+            </div>
+
+            <p id="success-message" class="text-green-600 mt-4 hidden">Thank you for renting our car!</p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const modal = document.getElementById("modal");
+        const rentForm = document.getElementById("rent-form");
+        const modalTitle = document.getElementById("modal-title");
+        const carIdField = document.getElementById("car-id");
+        const message = document.getElementById("success-message");
+
+        function openModal(carName, carId) {
+            modalTitle.textContent = "Rent " + carName;
+            carIdField.value = carId;
+            message.classList.add("hidden");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+            rentForm.reset();
+        }
+
+        rentForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const data = {
+                CarId: document.getElementById("car-id").value,
+                CustomerName: document.getElementById("customer-name").value,
+                RentalDate: document.getElementById("rental-date").value
+            };
+
+            fetch("/Rentals/Create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => {
+                    if (res.ok) {
+                        rentForm.reset();
+                        message.classList.remove("hidden");
+                    } else {
+                        alert("Error submitting rental. Try again.");
+                    }
+                })
+                .catch(() => alert("Unexpected error occurred."));
+        });
+    </script>
+}

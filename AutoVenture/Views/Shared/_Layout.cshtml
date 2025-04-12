@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AutoVenture</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="@Url.Content("~/images/logo.svg")" type="image/svg+xml" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md p-4 flex justify-between items-center">
+        <a asp-controller="Home" asp-action="Index" class="text-2xl font-bold text-blue-600">AutoVenture</a>
+        <nav class="space-x-4">
+            <a asp-controller="Home" asp-action="Index" class="text-blue-500 font-semibold">Home</a>
+            <a asp-controller="Cars" asp-action="Index" class="text-blue-500 font-semibold">Cars</a>
+            <a asp-controller="Contact" asp-action="Index" class="text-blue-500 font-semibold">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Body -->
+    <main class="flex-1 pb-3">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white text-center p-4 text-sm text-gray-500">
+        &copy; 2025 AutoVenture. Всички права запазени.
+    </footer>
+
+    <!-- Optional Scripts Section -->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

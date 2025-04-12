@@ -1,0 +1,61 @@
+﻿@model AutoVenture.Models.ContactViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Contact Us - AutoVenture";
+}
+
+<section class="max-w-5xl mx-auto py-12 px-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Свържи се с нас</h1>
+    
+    <div class="grid gap-8 md:grid-cols-2 mb-12">
+        <!-- Contact Details -->
+        <div class="space-y-4">
+            <p><strong>📍 Адрес:</strong> Tursete Tedo ot Karnobat</p>
+            <p>
+                <strong>📞 Телефон:</strong> 
+                <a href="tel:+359888123456" class="text-blue-600 hover:underline">+359 88 429 6070</a>
+            </p>
+            <p>
+                <strong>✉️ Имейл:</strong> 
+                <a href="mailto:info@AutoVenture.bg" class="text-blue-600 hover:underline">AutoVenture@gmail.com</a>
+            </p>
+        </div>
+
+        <!-- Contact Form -->
+        @using (Html.BeginForm("Submit", "Contact", FormMethod.Post, new { @class = "bg-white p-6 rounded-xl shadow space-y-4" }))
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                <label class="block font-medium">Вашето име</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "w-full border p-2 rounded", required = "required" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div>
+                <label class="block font-medium">Имейл адрес</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "w-full border p-2 rounded", required = "required", type = "email" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div>
+                <label class="block font-medium">Съобщение</label>
+                @Html.TextAreaFor(m => m.Message, new { @class = "w-full border p-2 rounded", required = "required", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Message)
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Изпрати
+            </button>
+        }
+    </div>
+
+    <!-- Optional Map -->
+    <div class="aspect-w-16 aspect-h-9">
+        <iframe class="w-full h-72 rounded-xl"
+                src="https://maps.google.com/maps?q=Карнобат&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                frameborder="0"
+                allowfullscreen>
+        </iframe>
+    </div>
+</section>
+
+@section Scripts {
+    @* Optionally include client-side validation scripts *@
+}
