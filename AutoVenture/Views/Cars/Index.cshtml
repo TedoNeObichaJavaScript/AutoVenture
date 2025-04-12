@@ -1,53 +1,97 @@
-﻿@model IEnumerable<YourProjectName.Models.Car>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Cars";
 }
 
-<h1>Index</h1>
+<section class="max-w-6xl mx-auto p-6">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Car Catalog</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Make)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DailyRentPrice)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Make)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DailyRentPrice)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CarId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a>
-            </td>
-        </tr>
+        <!-- Mazda MX-5 -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/mx5.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Mazda MX-5" />
+            <h3 class="text-lg font-bold text-blue-600">Mazda MX-5</h3>
+            <p class="text-sm text-gray-600 mb-2">Sporty convertible with 2.0L engine, 181hp, 28 MPG city / 35 MPG highway.</p>
+            <p class="text-sm font-semibold mb-2">Price: $60/day</p>
+            <button onclick="openModal('Mazda MX-5', '2.0L, 181hp', '28 MPG city / 35 MPG highway', 60, '@Url.Content("~/carsphoto/mx5.png")')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Toyota Corolla -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/corolla.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Toyota Corolla" />
+            <h3 class="text-lg font-bold text-blue-600">Toyota Corolla</h3>
+            <p class="text-sm text-gray-600 mb-2">1.8L engine, 139hp, 30 MPG city / 38 MPG highway. Great for daily use.</p>
+            <p class="text-sm font-semibold mb-2">Price: $30/day</p>
+            <button onclick="openModal('Toyota Corolla', '1.8L, 139hp', '30 MPG city / 38 MPG highway', 30, '@Url.Content("~/carsphoto/corolla.png")')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- BMW 3 Series -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/bmw.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="BMW 3 Series" />
+            <h3 class="text-lg font-bold text-blue-600">BMW 3 Series</h3>
+            <p class="text-sm text-gray-600 mb-2">Luxury sedan with 2.0L turbo, 255hp. Smooth and fast.</p>
+            <p class="text-sm font-semibold mb-2">Price: $70/day</p>
+            <button onclick="openModal('BMW 3 Series', '2.0L Turbo, 255hp', '25 MPG city / 34 MPG highway', 70, '@Url.Content("~/carsphoto/bmw.png")')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Audi A4 -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/audi.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Audi A4" />
+            <h3 class="text-lg font-bold text-blue-600">Audi A4</h3>
+            <p class="text-sm text-gray-600 mb-2">Premium ride with refined interior, 2.0L engine, 201hp.</p>
+            <p class="text-sm font-semibold mb-2">Price: $65/day</p>
+            <button onclick="openModal('Audi A4', '2.0L Turbo, 201hp', '24 MPG city / 31 MPG highway', 65, '@Url.Content("~/carsphoto/audi.png")')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Ford Focus -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/focus.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Ford Focus" />
+            <h3 class="text-lg font-bold text-blue-600">Ford Focus</h3>
+            <p class="text-sm text-gray-600 mb-2">Compact and fuel-efficient. Great for city driving.</p>
+            <p class="text-sm font-semibold mb-2">Price: $28/day</p>
+            <button onclick="openModal('Ford Focus', '2.0L, 160hp', '26 MPG city / 36 MPG highway', 28, '@Url.Content("~/carsphoto/focus.png")')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+        <!-- Jeep Wrangler -->
+        <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+            <img src="@Url.Content("~/carsphoto/jeep.png")" class="rounded-md mb-3 w-full h-40 object-cover" alt="Jeep Wrangler" />
+            <h3 class="text-lg font-bold text-blue-600">Jeep Wrangler</h3>
+            <p class="text-sm text-gray-600 mb-2">Off-road beast with 3.6L V6, 285hp. Adventure ready.</p>
+            <p class="text-sm font-semibold mb-2">Price: $75/day</p>
+            <button onclick="openModal('Jeep Wrangler', '3.6L V6, 285hp', '17 MPG city / 25 MPG highway', 75, '@Url.Content("~/carsphoto/jeep.png")')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Rent</button>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Modal functions; you may also choose to extract these into a separate JavaScript file.
+        const modal = document.getElementById("modal");
+        const rentForm = document.getElementById("rent-form");
+        const modalTitle = document.getElementById("modal-title");
+        const modalEngine = document.getElementById("modal-engine");
+        const modalMileage = document.getElementById("modal-mileage");
+        const modalPrice = document.getElementById("modal-price");
+        const modalImg = document.getElementById("modal-img");
+
+        function openModal(name, engine, mileage, price, img) {
+            modalTitle.textContent = name;
+            modalEngine.textContent = "Engine: " + engine;
+            modalMileage.textContent = "Mileage: " + mileage;
+            modalPrice.textContent = price;
+            modalImg.src = img;
+            modal.classList.remove("hidden");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+            rentForm.reset();
+        }
+
+        rentForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Your rental has been confirmed!");
+            closeModal();
+        });
+    </script>
 }
-    </tbody>
-</table>

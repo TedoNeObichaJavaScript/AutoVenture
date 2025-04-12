@@ -17,11 +17,12 @@ namespace AutoVenture.Controllers
             _context = context;
         }
 
+        // GET: /
         public async Task<IActionResult> Index()
         {
             try
             {
-                var cars = await _context.Cars.ToListAsync(); // Fetch cars asynchronously
+                var cars = await _context.Cars.ToListAsync();
                 return View(cars);
             }
             catch (Exception ex)
@@ -31,11 +32,35 @@ namespace AutoVenture.Controllers
             }
         }
 
+        // GET: /Privacy
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // GET: /Contact
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        // POST: /Contact
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Contact(ContactViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Handle form logic here (e.g., send email, save to DB)
+                ViewBag.Message = "Съобщението беше изпратено успешно!";
+                ModelState.Clear(); // Reset form fields
+                return View();
+            }
+
+            return View(model); // Return with validation errors
+        }
+
+        // GET: /Error
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

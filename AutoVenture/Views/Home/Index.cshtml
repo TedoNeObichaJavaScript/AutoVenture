@@ -1,36 +1,117 @@
 ﻿@{
-    ViewBag.Title = "Home";
+    ViewData["Title"] = "Home";
 }
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content container text-center">
-        <h1>Drive in Style</h1>
-        <p>Find your perfect ride with CarRent Pro</p>
-        <a href="@Url.Action("Index", "Cars")" class="btn btn-custom btn-lg">Browse Cars</a>
-    </div>
+<!-- Hero -->
+<section class="bg-blue-50 text-center py-16 px-4">
+    <h2 class="text-3xl font-semibold mb-4">Find your ride, fast and easy.</h2>
+    <p class="mb-6 text-gray-600">No fuss, no stress. Just simple car rentals.</p>
+    <a href="@Url.Action("Index", "Cars")" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Browse Cars</a>
 </section>
 
-<!-- Available Cars Section -->
-<section class="py-5">
-    <div class="container">
-        <h2 class="section-title text-center">Available Cars</h2>
-        <div class="row">
-            <!-- Here you can use a Razor loop to iterate over cars from your model -->
-            @foreach (var car in Model)
-            {
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <img src="@Url.Content(car.ImageUrl ?? "~/images/default-car.jpg")" class="card-img-top" alt="@car.Make">
-                        <div class="card-body">
-                            <h5 class="card-title">@car.Make @car.Model</h5>
-                            <p class="card-text">Year: @car.Year</p>
-                            <p class="card-text">Price per day: $@car.DailyRentPrice</p>
-                            <a href="@Url.Action("Details", "Cars", new { id = car.CarId })" class="btn btn-custom">Rent Now</a>
-                        </div>
-                    </div>
-                </div>
-            }
+<!-- Featured Cars -->
+<section class="py-12 px-6 max-w-6xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-6">Popular Cars</h3>
+    <div class="grid gap-6 md:grid-cols-3">
+        <!-- Mazda MX-5 -->
+        <div onclick="openModal('Mazda MX-5', '2.0L, 181hp', '28 MPG city / 35 MPG highway', 60, '@Url.Content("~/carsphoto/mx5.png")')"
+             class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+            <img src="@Url.Content("~/carsphoto/mx5.png")" alt="Mazda MX-5" class="rounded-md mb-4 w-full h-40 object-cover" />
+            <h4 class="text-lg font-semibold text-blue-600">Mazda MX-5</h4>
+            <p class="text-sm text-gray-500">Fun and fast. For when you wanna feel alive.</p>
+        </div>
+
+        <!-- Honda CR-V -->
+        <div onclick="openModal('Honda CR-V', '1.5L Turbo I4, 190hp', '27 MPG city / 32 MPG highway', 45, '@Url.Content("~/carsphoto/crv.png")')"
+             class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+            <img src="@Url.Content("~/carsphoto/crv.png")" alt="Honda CR-V" class="rounded-md mb-4 w-full h-40 object-cover" />
+            <h4 class="text-lg font-semibold text-blue-600">Honda CR-V</h4>
+            <p class="text-sm text-gray-500">Spacious and smooth. Perfect for road trips.</p>
+        </div>
+
+        <!-- Toyota Corolla -->
+        <div onclick="openModal('Toyota Corolla', '1.8L I4, 139hp', '30 MPG city / 38 MPG highway', 30, '@Url.Content("~/carsphoto/corolla.png")')"
+             class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+            <img src="@Url.Content("~/carsphoto/corolla.png")" alt="Toyota Corolla" class="rounded-md mb-4 w-full h-40 object-cover" />
+            <h4 class="text-lg font-semibold text-blue-600">Toyota Corolla</h4>
+            <p class="text-sm text-gray-500">Reliable and comfy. Great for city rides.</p>
         </div>
     </div>
 </section>
+
+<!-- Rental Modal -->
+<div id="rental-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-xl w-full max-w-lg relative">
+        <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 text-xl hover:text-gray-700">&times;</button>
+        <img id="modal-img" src="" class="rounded mb-4 w-full h-48 object-cover" />
+        <h2 id="modal-title" class="text-2xl font-bold text-blue-700 mb-1"></h2>
+        <p id="modal-engine" class="text-sm text-gray-700 mb-1"></p>
+        <p id="modal-mileage" class="text-sm text-gray-700 mb-3"></p>
+        <p class="text-sm font-semibold mb-4">Price: $<span id="modal-price"></span>/day</p>
+
+        <!-- Rental Form -->
+        <form id="rent-form" class="space-y-4">
+            <div>
+                <label class="block font-medium">Full Name</label>
+                <input type="text" name="fullname" required class="w-full border p-2 rounded" />
+            </div>
+            <div>
+                <label class="block font-medium">EGN</label>
+                <input type="text" name="egn" required pattern="\d{10}" class="w-full border p-2 rounded" />
+            </div>
+            <div>
+                <label class="block font-medium">Address</label>
+                <input type="text" name="address" required class="w-full border p-2 rounded" />
+            </div>
+            <div>
+                <label class="block font-medium">Card Number</label>
+                <input type="text" name="card" required pattern="\d{16}" class="w-full border p-2 rounded" />
+            </div>
+            <div class="flex gap-4">
+                <div class="flex-1">
+                    <label class="block font-medium">Expiry</label>
+                    <input type="text" name="expiry" required class="w-full border p-2 rounded" />
+                </div>
+                <div class="flex-1">
+                    <label class="block font-medium">CVV</label>
+                    <input type="text" name="cvv" required pattern="\d{3}" class="w-full border p-2 rounded" />
+                </div>
+            </div>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">Confirm Rental</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const modal = document.getElementById('rental-modal');
+        const rentForm = document.getElementById('rent-form');
+        const modalTitle = document.getElementById('modal-title');
+        const modalEngine = document.getElementById('modal-engine');
+        const modalMileage = document.getElementById('modal-mileage');
+        const modalPrice = document.getElementById('modal-price');
+        const modalImg = document.getElementById('modal-img');
+
+        function openModal(name, engine, mileage, price, img) {
+            modalTitle.textContent = name;
+            modalEngine.textContent = 'Engine: ' + engine;
+            modalMileage.textContent = 'Mileage: ' + mileage;
+            modalPrice.textContent = price;
+            modalImg.src = img;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            rentForm.reset();
+        }
+
+        rentForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Rental confirmed! Thank you.');
+            closeModal();
+        });
+    </script>
+}
