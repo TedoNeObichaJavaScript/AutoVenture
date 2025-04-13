@@ -20,16 +20,19 @@ namespace YourProjectName.Models
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
-        // This property is not mapped since it's calculated.
         [NotMapped]
         public decimal TotalPrice
         {
             get
             {
-                int rentalDays = (EndDate - StartDate).Days + 1;
-                return rentalDays * Car?.DailyRentPrice ?? 0;
+                if (EndDate.HasValue && Car != null)
+                {
+                    int rentalDays = (EndDate.Value - StartDate).Days + 1;
+                    return rentalDays * Car.DailyRentPrice;
+                }
+                return 0;
             }
         }
     }
