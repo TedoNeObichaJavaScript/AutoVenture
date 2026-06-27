@@ -1,37 +1,74 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AutoVenture</title>
 
-    <!-- Favicon -->
     <link rel="icon" href="@Url.Content("~/images/logo.svg")" type="image/svg+xml" />
 
+    <!-- Type: Archivo Black (display) + Space Grotesk (body/mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#0a0a0a',
+                        paper: '#fdfcf3',
+                        acid: '#d6f532',
+                        cobalt: '#2f5cff',
+                        flare: '#ff5a3c',
+                    },
+                    fontFamily: {
+                        display: ['"Archivo Black"', 'system-ui', 'sans-serif'],
+                        body: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        brutal: '6px 6px 0 0 #0a0a0a',
+                        brutalSm: '3px 3px 0 0 #0a0a0a',
+                        brutalLg: '12px 12px 0 0 #0a0a0a',
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="@Url.Content("~/css/brutal.css")" asp-append-version="true" />
 </head>
-<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-md p-4 flex justify-between items-center">
-        <a asp-controller="Home" asp-action="Index" class="text-2xl font-bold text-blue-600">AutoVenture</a>
-        <nav class="space-x-4">
-            <a asp-controller="Home" asp-action="Index" class="text-blue-500 font-semibold">Home</a>
-            <a asp-controller="Cars" asp-action="Index" class="text-blue-500 font-semibold">Cars</a>
-            <a asp-controller="Contact" asp-action="Index" class="text-blue-500 font-semibold">Contact</a>
-        </nav>
+<body class="bg-paper text-ink font-body min-h-screen flex flex-col antialiased">
+
+    <header class="border-b-4 border-ink bg-acid">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+            <a asp-controller="Home" asp-action="Index"
+               class="font-display text-2xl tracking-tight uppercase bg-ink text-paper px-3 py-1 shadow-brutalSm -rotate-1 hover:rotate-0 transition-transform">
+                AutoVenture
+            </a>
+            <nav class="flex items-center gap-2 text-sm font-bold uppercase">
+                <a asp-controller="Home" asp-action="Index" class="nav-brutal">Home</a>
+                <a asp-controller="Cars" asp-action="Index" class="nav-brutal">Fleet</a>
+                <a asp-controller="Contact" asp-action="Index" class="nav-brutal">Contact</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- Main Body -->
-    <main class="flex-1 pb-3">
+    <main class="flex-1" data-page>
         @RenderBody()
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white text-center p-4 text-sm text-gray-500">
-        &copy; 2025 AutoVenture. Всички права запазени.
+    <footer class="border-t-4 border-ink bg-ink text-paper">
+        <div class="max-w-6xl mx-auto px-5 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs uppercase tracking-widest">
+            <span class="font-display">AutoVenture</span>
+            <span>&copy; 2026 — Drive something loud.</span>
+        </div>
     </footer>
 
-    <!-- Optional Scripts Section -->
-    @RenderSection("Scripts", required: false)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+    <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

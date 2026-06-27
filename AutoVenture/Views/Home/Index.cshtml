@@ -1,117 +1,71 @@
-﻿@{
+@model IEnumerable<AutoVenture.Models.Car>
+@{
     ViewData["Title"] = "Home";
+    var featured = Model?.Take(3) ?? Enumerable.Empty<AutoVenture.Models.Car>();
 }
 
 <!-- Hero -->
-<section class="bg-blue-50 text-center py-16 px-4">
-    <h2 class="text-3xl font-semibold mb-4">Find your ride, fast and easy.</h2>
-    <p class="mb-6 text-gray-600">No fuss, no stress. Just simple car rentals.</p>
-    <a href="@Url.Action("Index", "Cars")" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Browse Cars</a>
+<section class="border-b-4 border-ink overflow-hidden">
+    <div class="max-w-6xl mx-auto px-5 py-16 md:py-24 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+            <p data-reveal="hero" class="inline-block bg-cobalt text-paper font-bold uppercase text-xs tracking-widest px-3 py-1 border-3 border-ink shadow-brutalSm mb-5">
+                No fuss · No stress
+            </p>
+            <h1 data-reveal="hero" class="font-display text-5xl md:text-7xl uppercase leading-[0.95]">
+                Rent.<br />Drive.<br /><span class="bg-acid px-2 -rotate-1 inline-block border-3 border-ink">Repeat.</span>
+            </h1>
+            <p data-reveal="hero" class="mt-6 text-lg max-w-md font-medium">
+                Pick your machine, lock the dates, hit the road. Honest pricing, zero paperwork theatre.
+            </p>
+            <a data-reveal="hero" href="@Url.Action("Index", "Cars")"
+               class="brutal-btn inline-block mt-8 bg-ink text-paper px-8 py-4 text-lg">
+                Explore the fleet →
+            </a>
+        </div>
+        <div data-reveal="hero" class="relative">
+            <div class="brutal-card p-0 -rotate-2">
+                <img src="@Url.Content("~/carsphoto/mx5.png")" alt="Featured car"
+                     class="w-full h-72 object-cover" loading="eager" />
+            </div>
+            <div class="absolute -bottom-4 -left-4 bg-flare text-ink font-display text-xl px-4 py-2 border-4 border-ink shadow-brutal rotate-3">
+                From $28/day
+            </div>
+        </div>
+    </div>
 </section>
 
-<!-- Featured Cars -->
-<section class="py-12 px-6 max-w-6xl mx-auto">
-    <h3 class="text-2xl font-semibold mb-6">Popular Cars</h3>
+<!-- Featured -->
+<section class="max-w-6xl mx-auto px-5 py-14">
+    <div class="flex items-end justify-between mb-8">
+        <h2 class="font-display text-3xl md:text-4xl uppercase">Popular rides</h2>
+        <a asp-controller="Cars" asp-action="Index" class="nav-brutal hidden sm:inline-block text-sm font-bold uppercase">See all</a>
+    </div>
+
     <div class="grid gap-6 md:grid-cols-3">
-        <!-- Mazda MX-5 -->
-        <div onclick="openModal('Mazda MX-5', '2.0L, 181hp', '28 MPG city / 35 MPG highway', 60, '@Url.Content("~/carsphoto/mx5.png")')"
-             class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-            <img src="@Url.Content("~/carsphoto/mx5.png")" alt="Mazda MX-5" class="rounded-md mb-4 w-full h-40 object-cover" />
-            <h4 class="text-lg font-semibold text-blue-600">Mazda MX-5</h4>
-            <p class="text-sm text-gray-500">Fun and fast. For when you wanna feel alive.</p>
-        </div>
-
-        <!-- Honda CR-V -->
-        <div onclick="openModal('Honda CR-V', '1.5L Turbo I4, 190hp', '27 MPG city / 32 MPG highway', 45, '@Url.Content("~/carsphoto/crv.png")')"
-             class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-            <img src="@Url.Content("~/carsphoto/crv.png")" alt="Honda CR-V" class="rounded-md mb-4 w-full h-40 object-cover" />
-            <h4 class="text-lg font-semibold text-blue-600">Honda CR-V</h4>
-            <p class="text-sm text-gray-500">Spacious and smooth. Perfect for road trips.</p>
-        </div>
-
-        <!-- Toyota Corolla -->
-        <div onclick="openModal('Toyota Corolla', '1.8L I4, 139hp', '30 MPG city / 38 MPG highway', 30, '@Url.Content("~/carsphoto/corolla.png")')"
-             class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-            <img src="@Url.Content("~/carsphoto/corolla.png")" alt="Toyota Corolla" class="rounded-md mb-4 w-full h-40 object-cover" />
-            <h4 class="text-lg font-semibold text-blue-600">Toyota Corolla</h4>
-            <p class="text-sm text-gray-500">Reliable and comfy. Great for city rides.</p>
-        </div>
+        @foreach (var car in featured)
+        {
+            <article data-reveal="card" class="brutal-card p-4 flex flex-col">
+                <img src="@Url.Content(car.ImageUrl ?? "/carsphoto/corolla.png")"
+                     alt="@car.Make @car.Model"
+                     class="w-full h-44 object-cover border-3 border-ink mb-4" loading="lazy" />
+                <h3 class="font-display text-xl uppercase">@car.Make @car.Model</h3>
+                <p class="text-sm font-medium text-ink/70 mb-3">@car.Year · Ready to roll.</p>
+                <div class="mt-auto flex items-center justify-between">
+                    <span class="font-display text-lg">$@car.DailyRentPrice<span class="text-sm font-body">/day</span></span>
+                    <button type="button"
+                            class="brutal-btn bg-acid px-4 py-2 text-sm"
+                            data-book
+                            data-car-id="@car.CarId"
+                            data-car-name="@car.Make @car.Model"
+                            data-car-price="@car.DailyRentPrice"
+                            data-car-img="@Url.Content(car.ImageUrl ?? "/carsphoto/corolla.png")"
+                            onclick="openBookingModal(this)">
+                        Rent
+                    </button>
+                </div>
+            </article>
+        }
     </div>
 </section>
 
-<!-- Rental Modal -->
-<div id="rental-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
-    <div class="bg-white p-6 rounded-xl w-full max-w-lg relative">
-        <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 text-xl hover:text-gray-700">&times;</button>
-        <img id="modal-img" src="" class="rounded mb-4 w-full h-48 object-cover" />
-        <h2 id="modal-title" class="text-2xl font-bold text-blue-700 mb-1"></h2>
-        <p id="modal-engine" class="text-sm text-gray-700 mb-1"></p>
-        <p id="modal-mileage" class="text-sm text-gray-700 mb-3"></p>
-        <p class="text-sm font-semibold mb-4">Price: $<span id="modal-price"></span>/day</p>
-
-        <!-- Rental Form -->
-        <form id="rent-form" class="space-y-4">
-            <div>
-                <label class="block font-medium">Full Name</label>
-                <input type="text" name="fullname" required class="w-full border p-2 rounded" />
-            </div>
-            <div>
-                <label class="block font-medium">EGN</label>
-                <input type="text" name="egn" required pattern="\d{10}" class="w-full border p-2 rounded" />
-            </div>
-            <div>
-                <label class="block font-medium">Address</label>
-                <input type="text" name="address" required class="w-full border p-2 rounded" />
-            </div>
-            <div>
-                <label class="block font-medium">Card Number</label>
-                <input type="text" name="card" required pattern="\d{16}" class="w-full border p-2 rounded" />
-            </div>
-            <div class="flex gap-4">
-                <div class="flex-1">
-                    <label class="block font-medium">Expiry</label>
-                    <input type="text" name="expiry" required class="w-full border p-2 rounded" />
-                </div>
-                <div class="flex-1">
-                    <label class="block font-medium">CVV</label>
-                    <input type="text" name="cvv" required pattern="\d{3}" class="w-full border p-2 rounded" />
-                </div>
-            </div>
-            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">Confirm Rental</button>
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        const modal = document.getElementById('rental-modal');
-        const rentForm = document.getElementById('rent-form');
-        const modalTitle = document.getElementById('modal-title');
-        const modalEngine = document.getElementById('modal-engine');
-        const modalMileage = document.getElementById('modal-mileage');
-        const modalPrice = document.getElementById('modal-price');
-        const modalImg = document.getElementById('modal-img');
-
-        function openModal(name, engine, mileage, price, img) {
-            modalTitle.textContent = name;
-            modalEngine.textContent = 'Engine: ' + engine;
-            modalMileage.textContent = 'Mileage: ' + mileage;
-            modalPrice.textContent = price;
-            modalImg.src = img;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeModal() {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            rentForm.reset();
-        }
-
-        rentForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Rental confirmed! Thank you.');
-            closeModal();
-        });
-    </script>
-}
+@await Html.PartialAsync("_BookingModal")
