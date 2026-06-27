@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace YourProjectName.Models
+namespace AutoVenture.Models
 {
     public class Car
     {

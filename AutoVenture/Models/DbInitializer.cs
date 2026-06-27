@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace YourProjectName.Models
+namespace AutoVenture.Models
 {
     public static class DbInitializer
     {

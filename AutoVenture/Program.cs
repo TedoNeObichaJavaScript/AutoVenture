@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using YourProjectName.Models; // Replace with your actual namespace
+using AutoVenture.Models; // Replace with your actual namespace
 
 var builder = WebApplication.CreateBuilder(args);
 

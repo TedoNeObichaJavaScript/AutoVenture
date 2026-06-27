@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace YourProjectName.Models
+namespace AutoVenture.Models
 {
     public class ApplicationDbContext : DbContext
     {

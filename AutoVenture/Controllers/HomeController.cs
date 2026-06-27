@@ -2,7 +2,7 @@ using System.Diagnostics;
 using AutoVenture.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using YourProjectName.Models;
+using AutoVenture.Models;
 
 namespace AutoVenture.Controllers
 {

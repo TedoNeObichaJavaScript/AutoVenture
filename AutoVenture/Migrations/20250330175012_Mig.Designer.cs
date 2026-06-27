@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YourProjectName.Models;
+using AutoVenture.Models;
 
 #nullable disable
 
@@ -25,7 +25,7 @@ namespace AutoVenture.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("YourProjectName.Models.Car", b =>
+            modelBuilder.Entity("AutoVenture.Models.Car", b =>
                 {
                     b.Property<int>("CarId")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace AutoVenture.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("YourProjectName.Models.Rental", b =>
+            modelBuilder.Entity("AutoVenture.Models.Rental", b =>
                 {
                     b.Property<int>("RentalId")
                         .ValueGeneratedOnAdd()
@@ -83,9 +83,9 @@ namespace AutoVenture.Migrations
                     b.ToTable("Rentals");
                 });
 
-            modelBuilder.Entity("YourProjectName.Models.Rental", b =>
+            modelBuilder.Entity("AutoVenture.Models.Rental", b =>
                 {
-                    b.HasOne("YourProjectName.Models.Car", "Car")
+                    b.HasOne("AutoVenture.Models.Car", "Car")
                         .WithMany("Rentals")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -94,7 +94,7 @@ namespace AutoVenture.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("YourProjectName.Models.Car", b =>
+            modelBuilder.Entity("AutoVenture.Models.Car", b =>
                 {
                     b.Navigation("Rentals");
                 });

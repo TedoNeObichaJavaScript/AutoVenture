@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace YourProjectName.Models
+namespace AutoVenture.Models
 {
     public class Rental
     {
