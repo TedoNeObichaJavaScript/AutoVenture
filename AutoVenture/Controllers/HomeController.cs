@@ -2,7 +2,6 @@ using System.Diagnostics;
 using AutoVenture.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoVenture.Models;
 
 namespace AutoVenture.Controllers
 {
@@ -52,7 +51,7 @@ namespace AutoVenture.Controllers
             if (ModelState.IsValid)
             {
                 // Handle form logic here (e.g., send email, save to DB)
-                ViewBag.Message = "Съобщението беше изпратено успешно!";
+                ViewBag.Message = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!";
                 ModelState.Clear(); // Reset form fields
                 return View();
             }
