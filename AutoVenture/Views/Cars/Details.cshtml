@@ -1,42 +1,27 @@
-﻿@model AutoVenture.Models.Car
-
+@model AutoVenture.Models.Car
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Car Details";
 }
 
-<h1>Details</h1>
+<section class="max-w-2xl mx-auto px-5 py-12">
+    <h1 class="font-display text-4xl uppercase border-b-4 border-ink pb-3 mb-6">@Model?.Make @Model?.Model</h1>
 
-<div>
-    <h4>Car</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Make)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Make)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Model)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DailyRentPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DailyRentPrice)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CarId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="brutal-card overflow-hidden">
+        @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+        {
+            <img src="@Url.Content(Model.ImageUrl)" alt="@Model.Make @Model.Model"
+                 class="w-full h-64 object-cover border-b-4 border-ink" loading="lazy" />
+        }
+        <dl class="p-6 grid grid-cols-3 gap-y-3 text-sm">
+            <dt class="font-bold uppercase">Make</dt><dd class="col-span-2 font-medium">@Model?.Make</dd>
+            <dt class="font-bold uppercase">Model</dt><dd class="col-span-2 font-medium">@Model?.Model</dd>
+            <dt class="font-bold uppercase">Year</dt><dd class="col-span-2 font-medium">@Model?.Year</dd>
+            <dt class="font-bold uppercase">Price</dt><dd class="col-span-2 font-display">$@Model?.DailyRentPrice/day</dd>
+        </dl>
+    </div>
+
+    <div class="flex gap-3 mt-6">
+        <a asp-action="Edit" asp-route-id="@Model?.CarId" class="brutal-btn bg-acid px-6 py-3">Edit</a>
+        <a asp-action="Index" class="brutal-btn bg-paper px-6 py-3">Back to fleet</a>
+    </div>
+</section>

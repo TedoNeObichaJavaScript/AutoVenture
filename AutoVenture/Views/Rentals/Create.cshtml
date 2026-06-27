@@ -1,47 +1,43 @@
-﻿@model AutoVenture.Models.Rental
-
+@model AutoVenture.Models.Rental
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "New Rental";
 }
 
-<h1>Create</h1>
+<section class="max-w-xl mx-auto px-5 py-12">
+    <h1 class="font-display text-4xl uppercase border-b-4 border-ink pb-3 mb-6">New rental</h1>
 
-<h4>Rental</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CarId" class="control-label"></label>
-                <select asp-for="CarId" class ="form-control" asp-items="ViewBag.CarId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerName" class="control-label"></label>
-                <input asp-for="CustomerName" class="form-control" />
-                <span asp-validation-for="CustomerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <form asp-action="Create" class="brutal-card p-6 space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-flare font-bold"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        <div>
+            <label asp-for="CarId" class="block font-bold uppercase text-xs mb-1">Car</label>
+            <select asp-for="CarId" class="brutal-input" asp-items="ViewBag.CarId"></select>
+        </div>
+        <div>
+            <label asp-for="CustomerName" class="block font-bold uppercase text-xs mb-1"></label>
+            <input asp-for="CustomerName" class="brutal-input" />
+            <span asp-validation-for="CustomerName" class="text-flare font-bold text-sm"></span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <label asp-for="StartDate" class="block font-bold uppercase text-xs mb-1"></label>
+                <input asp-for="StartDate" type="date" class="brutal-input" />
+                <span asp-validation-for="StartDate" class="text-flare font-bold text-sm"></span>
+            </div>
+            <div>
+                <label asp-for="EndDate" class="block font-bold uppercase text-xs mb-1"></label>
+                <input asp-for="EndDate" type="date" class="brutal-input" />
+                <span asp-validation-for="EndDate" class="text-flare font-bold text-sm"></span>
+            </div>
+        </div>
+
+        <div class="flex gap-3 pt-2">
+            <button type="submit" class="brutal-btn bg-acid px-6 py-3">Create</button>
+            <a asp-action="Index" class="brutal-btn bg-paper px-6 py-3">Cancel</a>
+        </div>
+    </form>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }

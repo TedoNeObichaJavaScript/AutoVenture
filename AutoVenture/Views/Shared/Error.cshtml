@@ -1,25 +1,21 @@
-﻿@model ErrorViewModel
+@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<section class="max-w-2xl mx-auto py-24 px-5 text-center" data-reveal="hero">
+    <div class="brutal-card bg-flare p-10 rotate-1">
+        <p class="font-display text-7xl leading-none">500</p>
+        <h1 class="font-display text-3xl uppercase mt-2">Something broke</h1>
+        <p class="mt-3 font-bold">An error occurred while processing your request.</p>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+        @if (Model?.ShowRequestId ?? false)
+        {
+            <p class="mt-4 text-sm font-mono break-all">
+                Request ID: <code class="bg-ink text-paper px-1">@Model.RequestId</code>
+            </p>
+        }
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+        <a href="@Url.Action("Index", "Home")" class="brutal-btn inline-block mt-8 bg-ink text-paper px-8 py-3">← Back home</a>
+    </div>
+</section>

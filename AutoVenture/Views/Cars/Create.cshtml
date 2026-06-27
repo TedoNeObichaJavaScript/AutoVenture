@@ -1,48 +1,48 @@
-﻿@model AutoVenture.Models.Car
-
+@model AutoVenture.Models.Car
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add Car";
 }
 
-<h1>Create</h1>
+<section class="max-w-xl mx-auto px-5 py-12">
+    <h1 class="font-display text-4xl uppercase border-b-4 border-ink pb-3 mb-6">Add a car</h1>
 
-<h4>Car</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Make" class="control-label"></label>
-                <input asp-for="Make" class="form-control" />
-                <span asp-validation-for="Make" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DailyRentPrice" class="control-label"></label>
-                <input asp-for="DailyRentPrice" class="form-control" />
-                <span asp-validation-for="DailyRentPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <form asp-action="Create" class="brutal-card p-6 space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-flare font-bold"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        <div>
+            <label asp-for="Make" class="block font-bold uppercase text-xs mb-1"></label>
+            <input asp-for="Make" class="brutal-input" />
+            <span asp-validation-for="Make" class="text-flare font-bold text-sm"></span>
+        </div>
+        <div>
+            <label asp-for="Model" class="block font-bold uppercase text-xs mb-1"></label>
+            <input asp-for="Model" class="brutal-input" />
+            <span asp-validation-for="Model" class="text-flare font-bold text-sm"></span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <label asp-for="Year" class="block font-bold uppercase text-xs mb-1"></label>
+                <input asp-for="Year" class="brutal-input" />
+                <span asp-validation-for="Year" class="text-flare font-bold text-sm"></span>
+            </div>
+            <div>
+                <label asp-for="DailyRentPrice" class="block font-bold uppercase text-xs mb-1"></label>
+                <input asp-for="DailyRentPrice" class="brutal-input" />
+                <span asp-validation-for="DailyRentPrice" class="text-flare font-bold text-sm"></span>
+            </div>
+        </div>
+        <div>
+            <label asp-for="ImageUrl" class="block font-bold uppercase text-xs mb-1">Image URL</label>
+            <input asp-for="ImageUrl" class="brutal-input" placeholder="/carsphoto/mx5.png" />
+        </div>
+
+        <div class="flex gap-3 pt-2">
+            <button type="submit" class="brutal-btn bg-acid px-6 py-3">Create</button>
+            <a asp-action="Index" class="brutal-btn bg-paper px-6 py-3">Cancel</a>
+        </div>
+    </form>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }

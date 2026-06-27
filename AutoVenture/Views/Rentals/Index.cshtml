@@ -1,53 +1,43 @@
-﻿@model IEnumerable<AutoVenture.Models.Rental>
-
+@model IEnumerable<AutoVenture.Models.Rental>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rentals";
 }
 
-<h1>Index</h1>
+<section class="max-w-5xl mx-auto px-5 py-12">
+    <div class="flex items-end justify-between border-b-4 border-ink pb-3 mb-6">
+        <h1 class="font-display text-4xl uppercase">Rentals</h1>
+        <a asp-action="Create" class="brutal-btn bg-acid px-5 py-2 text-sm">+ New</a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Car)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Car.Make)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RentalId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RentalId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RentalId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="brutal-card overflow-x-auto">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-ink text-paper font-display uppercase text-xs">
+                <tr>
+                    <th class="px-4 py-3">Car</th>
+                    <th class="px-4 py-3">Customer</th>
+                    <th class="px-4 py-3">Start</th>
+                    <th class="px-4 py-3">End</th>
+                    <th class="px-4 py-3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-t-2 border-ink/20 hover:bg-acid/30">
+                        <td class="px-4 py-3 font-bold">@item.Car?.Make @item.Car?.Model</td>
+                        <td class="px-4 py-3">@item.CustomerName</td>
+                        <td class="px-4 py-3">@item.StartDate.ToString("yyyy-MM-dd")</td>
+                        <td class="px-4 py-3">@(item.EndDate?.ToString("yyyy-MM-dd") ?? "—")</td>
+                        <td class="px-4 py-3 whitespace-nowrap text-xs font-bold uppercase">
+                            <a asp-action="Details" asp-route-id="@item.RentalId" class="hover:text-cobalt">View</a>
+                            <span class="text-ink/30">·</span>
+                            <a asp-action="Edit" asp-route-id="@item.RentalId" class="hover:text-cobalt">Edit</a>
+                            <span class="text-ink/30">·</span>
+                            <a asp-action="Delete" asp-route-id="@item.RentalId" class="hover:text-flare">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
