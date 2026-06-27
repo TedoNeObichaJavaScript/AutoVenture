@@ -1,7 +1,9 @@
+using AutoVenture.Data;
+using AutoVenture.Models;
+using AutoVenture.Services;
+using AutoVenture.Validation;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using AutoVenture.Models; // Replace with your actual namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,13 @@ builder.Services.AddControllersWithViews();
 // Register the database context with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Data + domain services
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IRentalService, RentalService>();
+
+// FluentValidation — validators resolved from DI, invoked explicitly in actions
+builder.Services.AddValidatorsFromAssemblyContaining<BookingRequestValidator>();
 
 // Build the application
 var app = builder.Build();
