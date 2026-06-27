@@ -29,9 +29,12 @@
                      data-name="@car.Make @car.Model"
                      data-price="@car.DailyRentPrice"
                      class="brutal-card p-4 flex flex-col">
-                <img src="@Url.Content(car.ImageUrl ?? "/carsphoto/corolla.png")"
-                     alt="@car.Make @car.Model"
-                     class="w-full h-44 object-cover border-3 border-ink mb-4" loading="lazy" />
+                @await Html.PartialAsync("_CarImage", new AutoVenture.Models.CarImageVm
+                {
+                    Src = car.ImageUrl ?? "/carsphoto/corolla.png",
+                    Alt = $"{car.Make} {car.Model}",
+                    CssClass = "w-full h-44 object-cover border-3 border-ink mb-4"
+                })
                 <h3 class="font-display text-xl uppercase">@car.Make @car.Model</h3>
                 <p class="text-sm font-medium text-ink/70 mb-3">@car.Year</p>
                 <div class="mt-auto flex items-center justify-between">

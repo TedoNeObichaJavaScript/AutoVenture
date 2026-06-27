@@ -1,0 +1,28 @@
+@model AutoVenture.Models.CarImageVm
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+@{
+    // Derive the WebP sibling (e.g. /carsphoto/mx5.png -> /carsphoto/webp/mx5.webp)
+    // and only advertise it when the encoded file is actually present, so we
+    // never ship a broken <picture> source. Run tools/encode-webp.ps1 to populate.
+    var src = Model.Src;
+    var dot = src.LastIndexOf('.');
+    var slash = src.LastIndexOf('/');
+    var name = dot > slash ? src.Substring(slash + 1, dot - slash - 1) : null;
+    var dir = slash >= 0 ? src.Substring(0, slash) : "";
+    var webpRel = name is null ? null : $"{dir}/webp/{name}.webp";
+    var webpExists = webpRel is not null &&
+        Env.WebRootFileProvider.GetFileInfo(webpRel.TrimStart('~').TrimStart('/')).Exists;
+    var loading = Model.Eager ? "eager" : "lazy";
+    var fetchPriority = Model.Eager ? "high" : "auto";
+}
+<picture>
+    @if (webpExists)
+    {
+        <source type="image/webp" srcset="@Url.Content("~" + webpRel)" />
+    }
+    <img src="@Url.Content("~" + Model.Src)"
+         alt="@Model.Alt"
+         class="@Model.CssClass"
+         width="@Model.Width" height="@Model.Height"
+         loading="@loading" decoding="async" fetchpriority="@fetchPriority" />
+</picture>
