@@ -6,16 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoVenture.Models;
+using AutoVenture.Services;
+using FluentValidation;
 
 namespace AutoVenture.Controllers
 {
     public class RentalsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IRentalService _rentalService;
+        private readonly IValidator<BookingRequest> _bookingValidator;
 
-        public RentalsController(ApplicationDbContext context)
+        public RentalsController(
+            ApplicationDbContext context,
+            IRentalService rentalService,
+            IValidator<BookingRequest> bookingValidator)
         {
             _context = context;
+            _rentalService = rentalService;
+            _bookingValidator = bookingValidator;
         }
 
         public async Task<IActionResult> Index()
@@ -57,34 +66,36 @@ namespace AutoVenture.Controllers
             return View(rental);
         }
 
-        [HttpPost("Rentals/CreateJson")]
-        public async Task<IActionResult> CreateJson([FromBody] RentalJsonModel model)
+        // Real booking endpoint consumed by the catalog/home rental forms.
+        [HttpPost("Rentals/Book")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Book([FromBody] BookingRequest request, CancellationToken ct)
         {
-            if (model == null) return BadRequest("Invalid data.");
+            if (request is null) return BadRequest(new { message = "Invalid request body." });
 
-            if (!ModelState.IsValid)
+            var validation = await _bookingValidator.ValidateAsync(request, ct);
+            if (!validation.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new
+                {
+                    message = "Validation failed.",
+                    errors = validation.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+                });
             }
 
-            var rental = new Rental
+            var result = await _rentalService.BookAsync(request, ct);
+            return result.Outcome switch
             {
-                CarId = model.CarId,
-                CustomerName = $"{model.FirstName} {model.MiddleName} {model.LastName}".Trim(),
-                StartDate = model.RentalDate,
-                EndDate = null
+                BookingOutcome.Success => Ok(new
+                {
+                    rentalId = result.RentalId,
+                    total = result.Total,
+                    message = "Booking confirmed."
+                }),
+                BookingOutcome.CarNotFound => NotFound(new { message = "Car not found." }),
+                BookingOutcome.NotAvailable => Conflict(new { message = "Car is already booked for those dates." }),
+                _ => Conflict(new { message = "Booking could not be completed, please retry." })
             };
-
-            try
-            {
-                _context.Rentals.Add(rental);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -155,19 +166,5 @@ namespace AutoVenture.Controllers
         {
             return _context.Rentals.Any(e => e.RentalId == id);
         }
-    }
-
-    public class RentalJsonModel
-    {
-        public int CarId { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public DateTime RentalDate { get; set; }
-        public string CreditCard { get; set; }
-        public string ExpirationDate { get; set; }
-        public string CCV { get; set; }
-        public string EGN { get; set; }
-        public string PickupSite { get; set; }
     }
 }
